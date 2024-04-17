@@ -22,9 +22,7 @@ public class Video {
         return duration;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+    public void setCode(String code) {this.code = code;}
 
     public void setTitle(String title) {
         this.title = title;
