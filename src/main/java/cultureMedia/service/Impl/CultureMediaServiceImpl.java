@@ -24,7 +24,7 @@ public class CultureMediaServiceImpl implements CultureMediaService {
 
     @Override
     public List<Video> findAll()throws CultureMediaException {
-            if (videos.size() > 0) {
+            if (!videos.isEmpty()) {
                 return videos;
             } else {
                 throw new VideoNotFoundException();
@@ -40,5 +40,39 @@ public class CultureMediaServiceImpl implements CultureMediaService {
     @Override
     public VideoViews add(VideoViews videoViews) {
         return null;
+    }
+
+    @Override
+    public List<Video> find(String title) throws VideoNotFoundException {
+        List<Video> filteredVideos = new ArrayList<Video>();
+        if (!videos.isEmpty()){
+            for ( Video video : videos ) {
+                if( video.getTitle().contains(title) ){
+                    filteredVideos.add(video);
+                }
+            }
+        }
+        if (filteredVideos.isEmpty()){
+            throw new VideoNotFoundException(title);
+        }else{
+            return filteredVideos;
+        }
+    }
+
+    @Override
+    public List<Video> find(Double fromDuration, Double toDuration) throws VideoNotFoundException {
+        List<Video> filteredVideos = new ArrayList<Video>();
+        if (!videos.isEmpty()) {
+            for (Video video : videos) {
+                if (video.getDuration() >= fromDuration && video.getDuration() <= toDuration) {
+                    filteredVideos.add(video);
+                }
+            }
+        }
+        if (filteredVideos.isEmpty()) {
+            throw new VideoNotFoundException();
+        } else {
+            return filteredVideos;
+        }
     }
 }
