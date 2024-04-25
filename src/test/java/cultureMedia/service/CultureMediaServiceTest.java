@@ -4,6 +4,10 @@ package cultureMedia.service;
 import cultureMedia.exception.CultureMediaException;
 import cultureMedia.exception.VideoNotFoundException;
 import cultureMedia.model.Video;
+import cultureMedia.repository.Impl.VideoRepositoryImpl;
+import cultureMedia.repository.Impl.ViewsRepositoryImpl;
+import cultureMedia.repository.VideoRepository;
+import cultureMedia.repository.ViewsRepository;
 import cultureMedia.service.Impl.CultureMediaServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +21,9 @@ public class CultureMediaServiceTest {
 
     @BeforeEach
     void unit(){
-        cultureMediaService = new CultureMediaServiceImpl();
+        VideoRepository videoRepository = new VideoRepositoryImpl();
+        ViewsRepository viewsRepository = new ViewsRepositoryImpl();
+        cultureMediaService = new CultureMediaServiceImpl( videoRepository, viewsRepository);
     }
 
     private void listVideos(){
