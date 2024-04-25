@@ -1,8 +1,12 @@
 package cultureMedia.service;
 
+import cultureMedia.exception.CultureMediaException;
 import cultureMedia.exception.VideoNotFoundException;
 import cultureMedia.model.Video;
+import cultureMedia.repository.Impl.VideoRepositoryImpl;
+import cultureMedia.repository.Impl.ViewsRepositoryImpl;
 import cultureMedia.repository.VideoRepository;
+import cultureMedia.repository.ViewsRepository;
 import cultureMedia.service.Impl.CultureMediaServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +20,9 @@ public class CultureMediaServiceFindByTitleAndDurationTest {
     private CultureMediaService cultureMediaService;
     @BeforeEach
     void unit(){
-        cultureMediaService = new CultureMediaServiceImpl();
+        VideoRepository videoRepository = new VideoRepositoryImpl();
+        ViewsRepository viewsRepository = new ViewsRepositoryImpl();
+        cultureMediaService = new CultureMediaServiceImpl(videoRepository, viewsRepository);
 
         List<Video> videos = List.of(
                 new Video("01", "Título 1", "----", 4.5),
@@ -33,7 +39,7 @@ public class CultureMediaServiceFindByTitleAndDurationTest {
 
 
     @Test
-    void when_FindByTitle_only_videos_which_contains_the_word_in_the_title_should_be_returned_successfully() throws VideoNotFoundException {
+    void when_FindByTitle_only_videos_which_contains_the_word_in_the_title_should_be_returned_successfully() throws CultureMediaException {
         List<Video> videos;
         videos = cultureMediaService.find("Clic");
         assertEquals(2, videos.size());
@@ -47,7 +53,7 @@ public class CultureMediaServiceFindByTitleAndDurationTest {
     }
 
     @Test
-    void when_FindByDuration_only_videos_between_the_range_should_be_returned_successfully() throws VideoNotFoundException {
+    void when_FindByDuration_only_videos_between_the_range_should_be_returned_successfully() throws CultureMediaException {
         List<Video> videos = cultureMediaService.find(4.5,5.5);
         assertEquals(3, videos.size());
     }
