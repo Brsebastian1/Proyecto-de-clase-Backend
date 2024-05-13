@@ -12,6 +12,7 @@ import java.util.List;
 
 
 public class CultureMediaServiceImpl implements CultureMediaService {
+
     VideoRepository videoRepository;
     ViewsRepository viewsRepository;
 
@@ -33,8 +34,7 @@ public class CultureMediaServiceImpl implements CultureMediaService {
 
     @Override
     public Video add(Video video){
-        Video videoAdd = videoRepository.save(video);
-        return videoAdd;
+        return videoRepository.save(video);
     }
 
     @Override
@@ -61,7 +61,5 @@ public class CultureMediaServiceImpl implements CultureMediaService {
         }else{
             return filteredVideos;
         }
-
-
     }
 }
