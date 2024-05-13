@@ -36,14 +36,13 @@ public class CultureMediaController {
             return ResponseEntity.status(HttpStatus.OK).body(cultureMediaService.findAll());
         } catch (CultureMediaException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .header("Error-Message", e.getMessage())
                     .body(Collections.emptyList());
         }
     }
 
 
 
-    @PostMapping
+    @PostMapping("/videos")
     public Video addVideo(@RequestBody Video video){
         return cultureMediaService.add(video);
     }
